@@ -1,0 +1,5 @@
+{
+  "name": "PuzzleMe",
+  "description": "An interactive web application where users can upload any image and instantly turn it into a playable jigsaw puzzle. Features include multiple difficulty levels, piece rotation, and the ability to share puzzles with others.",
+  "requestFramePermissions": []
+}
