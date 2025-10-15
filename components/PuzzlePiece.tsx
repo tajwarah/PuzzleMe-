@@ -15,6 +15,13 @@ const PuzzlePiece: React.FC<PuzzlePieceProps> = ({ piece, difficulty, isMovable,
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (isMovable && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onMove(piece.id);
+    }
+  };
+
   const row = Math.floor(piece.currentIndex / difficulty);
   const col = piece.currentIndex % difficulty;
 
@@ -32,6 +39,7 @@ const PuzzlePiece: React.FC<PuzzlePieceProps> = ({ piece, difficulty, isMovable,
       <div
         style={style}
         className="bg-black/10 rounded-lg shadow-inner"
+        aria-hidden="true"
       />
     );
   }
@@ -39,9 +47,13 @@ const PuzzlePiece: React.FC<PuzzlePieceProps> = ({ piece, difficulty, isMovable,
   return (
     <div
       style={style}
-      className={`transform-gpu will-change-transform rounded-lg ${isMovable ? 'cursor-pointer z-10 wiggle-animation' : ''}`}
+      className={`transform-gpu will-change-transform rounded-lg focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-[--theme-accent] ${isMovable ? 'cursor-pointer z-10 wiggle-animation' : ''}`}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       title={isMovable ? "Click to move" : ""}
+      role="button"
+      aria-label={`Puzzle piece at row ${row + 1}, column ${col + 1}. ${isMovable ? 'Movable.' : ''}`}
+      tabIndex={isMovable ? 0 : -1}
     >
       <img
         src={piece.imgSrc}
@@ -49,7 +61,7 @@ const PuzzlePiece: React.FC<PuzzlePieceProps> = ({ piece, difficulty, isMovable,
         style={{
            boxShadow: 'inset 0 2px 2px rgba(255,255,255,0.5), inset 0 -2px 2px rgba(0,0,0,0.3)'
         }}
-        alt={`Puzzle piece ${piece.id}`}
+        alt=""
         draggable={false}
       />
     </div>
